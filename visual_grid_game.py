@@ -1,6 +1,7 @@
 import random
 import tkinter as tk
 
+from agent import SearchAgent
 
 # ============================================================
 # ENVIRONMENT
@@ -157,7 +158,21 @@ class VisualGridHuntGame:
             "smells_toxin": (
                 tuple(self.agent_pos)
                 in self.toxic_traps
-            )
+            ),
+            "agent_pos": tuple(
+                self.agent_pos
+            ),
+
+            "grid_size": (
+                self.width, self.height
+            ),
+
+            "walls": list(
+                self.walls
+            ),
+            
+            "all_food": list(
+                self.food_positions)
         }
 
     # ========================================================
@@ -583,7 +598,7 @@ class GridGameGUI:
                 "Simple Reflex Agent"
             )
 
-        else:
+        elif agent_type == "model":
 
             self.agent = ModelBasedAgent()
 
@@ -591,6 +606,13 @@ class GridGameGUI:
                 "Model-Based Agent"
             )
 
+        elif agent_type == "search":
+
+            self.agent = SearchAgent()
+
+            self.agent_name = (
+                "Search Agent"
+            )
         # ----------------------------------------------------
         # Canvas size
         # ----------------------------------------------------
@@ -924,7 +946,7 @@ if __name__ == "__main__":
         height=10,
         num_food=15,
         num_opponents=0,
-        agent_type="model"
+        agent_type="search"
     )
 
     root.mainloop()
