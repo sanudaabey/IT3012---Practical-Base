@@ -9,7 +9,7 @@ from agent import SearchAgent
 
 class VisualGridHuntGame:
     """
-    Grid environment for IT3012 Intelligent Agents Lab 02.
+    Grid environment for IT3012 Intelligent Agents Lab 03.
 
     The environment provides percepts to the agent and
     executes the action selected by the agent.
@@ -124,6 +124,10 @@ class VisualGridHuntGame:
         - Walls in four directions
         - Food at current location
         - Toxic trap at current location
+        - Current agent position
+        - Grid size
+        - All walls
+        - All remaining food
         """
 
         x, y = self.agent_pos
@@ -159,20 +163,23 @@ class VisualGridHuntGame:
                 tuple(self.agent_pos)
                 in self.toxic_traps
             ),
+
             "agent_pos": tuple(
                 self.agent_pos
             ),
 
             "grid_size": (
-                self.width, self.height
+                self.width,
+                self.height
             ),
 
             "walls": list(
                 self.walls
             ),
-            
+
             "all_food": list(
-                self.food_positions)
+                self.food_positions
+            )
         }
 
     # ========================================================
@@ -516,7 +523,10 @@ class ModelBasedAgent:
 
             if next_cell not in self.visited_cells:
 
-                self.update_position(action, percept)
+                self.update_position(
+                    action,
+                    percept
+                )
 
                 return action
 
@@ -543,7 +553,10 @@ class ModelBasedAgent:
 
             if not blocked:
 
-                self.update_position(action, percept)
+                self.update_position(
+                    action,
+                    percept
+                )
 
                 return action
 
@@ -611,8 +624,9 @@ class GridGameGUI:
             self.agent = SearchAgent()
 
             self.agent_name = (
-                "Search Agent"
+                "A* Search Agent"
             )
+
         # ----------------------------------------------------
         # Canvas size
         # ----------------------------------------------------
